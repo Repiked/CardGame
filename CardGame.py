@@ -16,7 +16,11 @@ def prepare():
         player1.append(cards.pop(random.randint(0, len(cards) -1)))
         player2.append(cards.pop(random.randint(0, len(cards) -1)))
     
-    print("Welcome to the Card Game!")
+    print("Welcome to the Card Game! Type exit to exit and rules for the rules of the game.")
+    player1_move = input("Need to know the rules?: ")
+    if player1_move == "yes":
+            print("Here are the rules: Higher numbers beat lower numbers. The only exception is when 14 is matched up against 2, which in this case 2 wins to prevent 14 to be overpowered. After people play their cards, the winner gets the other person's lower card and the higher card is discarded into the waste pile. Then the person who won draws a card from the draw pile, if there is a card still there. If you tie, the card gets added to the pot and the stakes get higher! It will continue until someone beats another. When a winner is declared after a showdown, the person takes all the loser's card and the winner takes the same number of cards he won from the draw pile. For example, if you win after tying once, then you get the loser's two cards and draw two more cards, if available.")
+    player1_move = 0
 
 def player_move():
     global player1_move
@@ -70,19 +74,23 @@ def evaluation():
                 player2.append(cards.pop(random.randint(0, len(cards)-1)))
                 print("Player 2 also takes a card from the deck.")
     elif player1_move == player2move:
-        print("It's a tie! Both players lose their cards.")
+        print("It is a tie! The two cards are added to the pot and the winner of the next round takes all!")
+        player_move()
+        opponent_move(int(ty))
+        evaluation()
+        
     else:
         print("The game will be exited.")
     
     print("")
     if not player1_move == "exit" and len(cards) % 5 == 0 or len(cards) == 1:
         if not len(cards) == 0:
-            print("There are " + str(len(cards)) + " cards left in the deck.")
+            print("There are " + str(len(cards)) + " cards left in the draw deck.")
         else:
             print("There are no more cards left in the deck.")
 
 
-##################################################################################################################3
+##################################################################################################################
 
 
 
@@ -94,3 +102,7 @@ while len(player1) != 0 and len(player2) != 0 and player1_move != "exit":
     evaluation()
 
 print("The game is finished.")
+if len(player1) > len(player2):
+    print("Congratulations! You have won the game against the computer!")
+else:
+    print("The computer has won. Would you like to play again another time?")
